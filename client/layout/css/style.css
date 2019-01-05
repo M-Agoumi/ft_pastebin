@@ -1,0 +1,17 @@
+.home .row .row form label{
+	width: 200px;
+	text-align: left;
+	justify-content: left;
+}
+.home .row .row form input,
+.home .row .row form textarea,
+.home .row .row form select{
+	width: 400px;
+}
+.home .row .row form div{
+	margin-top: 10px;
+}
+.home .row .row form .textarea label{
+	vertical-align: top;
+	height: 400px;
+}
