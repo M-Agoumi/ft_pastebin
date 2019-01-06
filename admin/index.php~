@@ -1,7 +1,7 @@
 <?php
 	$title="Dashboard";
 	include "init.php";
-	if(isset($_SESSION['logged'])){
+	if(isset($_SESSION['loged'])){
     	$pastes_request = "SELECT * FROM pastes ORDER BY id DESC";
    	$admins_request = "SELECT * FROM users ORDER BY userId DESC";
    	$pastes = $db->query($pastes_request);
@@ -33,9 +33,9 @@
 				echo "<td>".substr($row['content'], 0, 20)." ...</td>";
 				echo "<td>".$row['ban']."</td>";
 				echo "<td>".$row['code']."</td>";
-				echo "<td><a href = 'http://10.11.100.228/".$row['code']."' class='btn btn-primary'>See Paste</a></td>";
+				echo "<td><a href = '10.11.100.228/".$row['code']."' class='btn btn-primary'>See Paste</a></td>";
 				echo "<td><a href = 'modify-paste.php?id=".$row['id']."' class='btn btn-info'>Modify</a></td>";
-				echo "<td><a href = 'delete-paste.php?id=".$row['id']."' class='btn btn-danger confirmation'>Delete</a></td>";
+				echo "<td><a href = 'delete-paste.php?id=".$row['id']."' class='btn btn-danger'>Delete</a></td>";
 	    		echo "</tr>";
 	    	}
 	    ?>
@@ -53,29 +53,18 @@
 				echo "<td>".$row['date']."</td>";  		
 				echo "<td>".$row['level']."</td>";  		
 				echo "<td><a href = 'modify-admin.php?uid=".$row['userId']."' class='btn btn-info'>Modify</a></td>";
-				echo "<td><a href = 'delete-admin.php?uid=".$row['userId']."' class='btn btn-danger confirmation'>Delete</a></td>";
+				echo "<td><a href = 'delete-admin.php?uid=".$row['userId']."' class='btn btn-danger'>Delete</a></td>";
 	    		echo "</tr>";
 	    	}
 	    ?>
 	</table>
-	<script>
-		$('.confirmation').click(function(){
-       			 return confirm('Are You Sure?');
-    		});
-	</script>
 <?php
 		include "includes/footer.php";
 	}else{
 ?>
-	<form action="login.php" method="POST" style="margin:10px auto;width: 406px;">
-		<input type="email" name="mail" placeholder="enter your email">
-		<input type="password" name="password">
-		<input type="submit" value="login"> 
+	<form action="">
+		
 	</form>
 <?php	
-		if(isset($_SESSION['error'])){
-			echo "wrong password or username";
-			unset($_SESSION['error']);
-		}
 	}
 ?>

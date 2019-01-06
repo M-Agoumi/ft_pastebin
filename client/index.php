@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	//validate the paste content
 	if (isset($_POST['content']) && !empty($_POST['content'])){
 		$content = filter_var($_POST['content'],FILTER_SANITIZE_STRING);
+		$content = str_replace ("\n", "<br>", $content);
 	}else{
 		$formError[] = "The paste Content Can't be Empty";
 	}
@@ -109,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 				<div class="form-groum form-inline">
 					<label>Language used</label>
 					<select class="form-control" id="sel1" name="lang">
+						<option value="0" <?php if(isset($lang) && $lang == "0") echo "selected"; ?>>NULL</option>
 						<option value="c" <?php if(isset($lang) && $lang == "c") echo "selected"; ?>>C</option>
 						<option value="html" <?php if(isset($lang) && $lang == "html") echo "selected"; ?>>html</option>
 					</select>
@@ -126,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 				</div>
 				<div class="form-group form-inline textarea">
 					<label class='align-top'>The Paste content</label>
-					<textarea class="form-control" name="content" rows="7"></textarea>
+					<textarea class="form-control" name="content" rows="7"><?php if(isset($content)) echo $content?></textarea>
 				</div>
 				<div class="form-groum form-inline">
 					<label></label>

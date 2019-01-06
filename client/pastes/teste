@@ -1,0 +1,33 @@
+#include "libft.h"
+
+int		ft_atoi(const char *str)
+{
+	int			result;
+	char		sign;
+	const char	*s;
+	int			i;
+
+	i = 0;
+	sign = 0;
+	result = 0;
+	s = str;
+	while (*(s + i) == ' ' || *(s + i) == '
+' || *(s + i) == '
+' || 
+			*(s + i) == '	' || *(s + i) == 'f' || *(s + i) == 'v')
+		i++;
+	if (*(str + i) == '-' || *(str + i) == '+')
+	{
+		sign = *(str + i);
+		i++;
+	}
+	while (ft_isdigit(*(str + i)))
+	{
+		result = result * 10 + (int)(*(str + i) - 48);
+		i++;
+	}
+	if (sign == '-')
+		return (-result);
+	return (result);
+}
+
