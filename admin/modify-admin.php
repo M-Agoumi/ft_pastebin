@@ -3,27 +3,35 @@
 include "init.php";
 	if (!empty($_POST))
 	{
-		$id = $_POST['uid'];
+		$uid = $_POST['uid'];
 		$name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
-		$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+		$email = filter_var($_POST['mail'], FILTER_SANITIZE_EMAIL);
 		$password1= $_POST['passwd1'];
 		$password2= $_POST['passwd1'];
 		if ($password1 != $password2)
-			header("Location:http://10.11.100.228:81/modify-admin?uid=$id");
-		$date = filter_var($_POST['date'], FILTER_SANITIZE_STRING);
-		$level = filter_var($_POST['level'], FILTER_SANITIZE_STRING);
-		$password = password_hash($password1);
-		$update = "UPDATE users SET name = '$name', email = '$email', password = '$password', date='$date', level = '$level' WHERE users.userId='$uid'";
-		if ($db->query($update) == true)
-			header("Location:http://10.11.100.228:81/");
+			$error = '';
+		$password = $password1;
+		if(!empty($password1))
+		{
+			$sql = "UPDATE `users` SET `name` = '$name', `email` = '$email', `password` = '$password' WHERE `users`.`userId` = $uid;";
+		}else{
+			$sql = "UPDATE `users` SET `name` = '$name', `email` = '$email' WHERE `users`.`userId` = $uid;";
+		}
+		if(!isset($error)){
+			if ($db->query($sql)){
+				header("Location:http://10.11.100.228:81/");
+				exit();
+			}else
+				echo "error in our side please try later or contact the adminstation";
+		}
 	}
 	else
 	{
-		$id = $_GET['id'];
-		$id = htmlspecialchars($id);
-		$paste_request = "SELECT * FROM pastes WHERE id=$id";
-    		$paste = $db->query($paste_request);
-		$row = $paste->fetch_assoc();
+		$uid = $_GET['uid'];
+		$uid = htmlspecialchars($uid);
+		$admin_request = "SELECT * FROM users WHERE userId=$uid";
+    		$admin = $db->query($admin_request);
+		$row = $admin->fetch_assoc();
 ?>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
 		<div class="container">
@@ -34,9 +42,9 @@ include "init.php";
 		</div>
     </nav>
 
-    <h2 class="text-center">Paste</h2>
+    <h2 class="text-center">Admin</h2>
 
-<form method="POST" action="modify-paste.php" style="width : 50%; margin : 5px auto;">
+<form method="POST" style="width : 50%; margin : 5px auto;">
 	Name:<br>
 	<input style ="margin: 2px;" class="form-control" type="text" name="name" value=<?= $row['name']?>><br>
 	E-mail:<br>
@@ -45,12 +53,12 @@ include "init.php";
 	<input style ="margin: 2px;" class="form-control" type="password" name="passwd1"><br>
 	Confirm Password:<br>
 	<input style ="margin: 2px;" class="form-control" type="password" name="passwd2"><br>
-	Date:<br>
-	<input style ="margin: 2px;" class="form-control" type="date" name="date" value=<?= $row['date']?>><br>
-	Level:<br>
-	<input style ="margin: 2px;" class="form-control" type="text" name="level" value=<?= $row['level']?>><br>
-	<input type="hidden" name="id" value=<?= $row['id']?>>
-	<button class="btn btn-primary" href="modify-paste.php">Update</button>
+	<input type="hidden" name="uid" value=<?= $row['userId']?>>
+	<input type="submit" />
+	<?php
+	if(isset($error))
+		echo "passwords doesn't match";
+?>
 </form>
 <?php } ?>
 <?php

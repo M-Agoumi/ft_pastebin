@@ -5,3 +5,8 @@
 	include "connect.php";
 	include "includes/header.php";
 	include "includes/function.php";
+	if(!isset($skip)){
+		if(!isset($_SESSION['logged'])){
+			header("location: /");
+		}	
+	}
