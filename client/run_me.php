@@ -1,3 +1,6 @@
 <?php
 	//create users table
 	$query="CREATE TABLE `rush`.`users` ( `userId` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `email` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `password` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `level` TINYINT(2) NOT NULL DEFAULT '0' , PRIMARY KEY (`userId`)) ENGINE = InnoDB;";
+	$query="CREATE TABLE `rush`.`pastes` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `title` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `author` INT(11) NOT NULL , `authorname` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL , `lang` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `limits` INT(11) NOT NULL DEFAULT '0' , `watched` INT(11) NOT NULL DEFAULT '0' , `upvote` INT(11) NOT NULL DEFAULT '0' , `private` BOOLEAN NOT NULL DEFAULT FALSE , `content` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `date` DATETIME NOT NULL , `ban` DOUBLE NOT NULL DEFAULT '0' , PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;";
+	$query="ALTER TABLE `pastes` DROP `author`;";
+	$query="ALTER TABLE `pastes` ADD `code` VARCHAR(255) NOT NULL AFTER `ban`;";

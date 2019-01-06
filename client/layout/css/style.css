@@ -12,6 +12,9 @@
 	margin-top: 10px;
 }
 .home .row .row form .textarea label{
-	vertical-align: top;
-	height: 400px;
+	position: relative;
+	bottom: 74px;
+}
+.home .row .row form span{
+	width: 400px;
 }
