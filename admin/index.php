@@ -1,5 +1,6 @@
 <?php
 	$title="Dashboard";
+	$skip = '';
 	include "init.php";
 	if(isset($_SESSION['logged'])){
     	$pastes_request = "SELECT * FROM pastes ORDER BY id DESC";
